@@ -87,10 +87,35 @@ not_in_list(X,[H|T]):-
     not_in_list(X,T).
 
 %%%% task 2 
+borrowers_count(Book, N):-
+    list_borrowers(Book, [], L),
+    count_list(L, N).
+
+list_borrowers(Book, Acc, L):-
+    borrowed(Student, Book),
+    not_in_list(Student, Acc),
+    list_borrowers(Book, [Student|Acc], L).
+
+list_borrowers(_, L, L).
+
+count_list([], 0).
+count_list([_|T], N):-
+    count_list(T, N1),
+    N is N1 + 1.
 
 %%%% task 3 
 
 %%%% task 4 
+ratings_of_book(Book, L):-
+    add_ratings(Book, [], L).
+
+add_ratings(Book, Acc, L):-
+    rating(Student, Book, Score),
+    not_in_list((Student, Score), Acc),
+    !,
+    add_ratings(Book, [(Student, Score)|Acc], L).
+
+add_ratings(_, L, L). 
 
 %%%% task 5
 
@@ -148,4 +173,5 @@ get_max([_|T],MaxSoFar,TopicSoFar,FinalTopic):-
 
 
     
+
 
