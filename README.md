@@ -1,16 +1,17 @@
-# Ai-assignment
-# Library System – Prolog Assignment
+# 🤖 AI Assignment
 
-## Overview
+# 📚 Library System – Prolog Assignment
 
-This assignment implements several queries for a university library system using Prolog.
-The program works with the provided file `library_data.pl`, which contains facts about students, books, borrowed books, topics, and ratings.
+## 📌 Overview
+
+This assignment implements several queries for a university **library system using Prolog**.
+The program works with the provided file `library_data.pl`, which contains facts about **students, books, borrowed books, topics, and ratings**.
 
 The goal is to write predicates that analyze this data and answer specific questions about the library.
 
 ---
 
-## Data Facts
+## 🗂️ Data Facts
 
 The system uses the following facts:
 
@@ -21,29 +22,31 @@ borrowed(Student, Book).
 topics(Book, TopicsList).
 rating(Student, Book, Score).
 ```
-## Implemented Tasks
 
-### Task 1 – Books Borrowed by a Student
+---
 
-Returns a list of books borrowed by a student.
+## ✅ Implemented Tasks
 
-### Task 2 – Borrowers Count
+### 📖 Task 1 – Books Borrowed by a Student
 
-Counts how many students borrowed a specific book.
+Returns a **list of books borrowed by a student**.
 
-### Task 3 – Most Borrowed Book
+### 👥 Task 2 – Borrowers Count
 
-Finds the book that was borrowed the most.
+Counts **how many students borrowed a specific book**.
 
-### Task 4 – Ratings of a Book
+### 🏆 Task 3 – Most Borrowed Book
 
-Returns all ratings of a book as a list of tuples.
+Finds **the book that was borrowed the most**.
 
-### Task 5 – Top Reviewer
+### ⭐ Task 4 – Ratings of a Book
 
-Finds the student who gave the highest rating.
+Returns **all ratings of a book as a list of tuples**.
 
+### 🥇 Task 5 – Top Reviewer
 
-### Task 6 – Most Common Topic for a Student
+Finds **the student who gave the highest rating**.
 
-Finds the most frequent topic among books borrowed by a student.
+### 📚 Task 6 – Most Common Topic for a Student
+
+Finds **the most frequent topic among books borrowed by a student**.
