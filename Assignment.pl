@@ -42,7 +42,7 @@ borrowed(karim, recursion_in_depth).
 % topics(Book, TopicsList)
 
 topics(prolog_fundamentals, [facts, rules, queries, unification]).
-topics(recursion_in_depth, [base_case, recursive_case, tracing, termination]).
+topics(recursion_in_depth, [base_case, recursive_case, tracing, prefix, termination]). % added topic prefix
 topics(list_programming, [head_tail, member, append, length,prefix, suffix]).
 topics(ai_intro, [search, logic, knowledge_representation]).
 
@@ -86,7 +86,8 @@ not_in_list(X,[H|T]):-
     X\=H,
     not_in_list(X,T).
 
-%%%% task 2 
+%%%%%%%%%%%%%% task 2 
+
 borrowers_count(Book, N):-
     list_borrowers(Book, [], L),
     count_list(L, N).
@@ -103,7 +104,8 @@ count_list([_|T], N):-
     count_list(T, N1),
     N is N1 + 1.
 
-%%%% task 3 
+%%%%%%%%%%%%%% task 3 
+
 most_borrowed_book(Book):-
     borrowed(_, Book),
     borrowers_count(Book, N),
@@ -118,7 +120,8 @@ max(_, N):-
 
 max(_, _).
 
-%%%% task 4 
+%%%%%%%%%%%%%%%%% task 4 
+
 ratings_of_book(Book, L):-
     add_ratings(Book, [], L).
 
@@ -130,7 +133,7 @@ add_ratings(Book, Acc, L):-
 
 add_ratings(_, L, L). 
 
-%%%% task 5
+%%%%%%%%%%%%%%%%% task 5
 
 all_ratings(L) :- 
     all_ratings([], L).
@@ -157,41 +160,47 @@ find_highest([(_,Score)|T], (Smax,ScoreMax)) :-
 top_reviewer(Student) :- 
     all_ratings(RatingsList),
     find_highest(RatingsList, (Student, _)).
-    
-%%%% task 6     
+
+%%%%%%%%%%%%%%%% task 6     
 
 most_common_topic_for_student(Student, Topic):-
-    books_borrowed_by_student(Student, L),
-    get_all_topics(L,[],AllTopics),
+    books_borrowed_by_student(Student, L), 
+    get_all_topics(L,[],AllTopics), 
     find_most_common(AllTopics,Topic),
     !.
 
-get_all_topics([],AllTopics,AllTopics).
-get_all_topics([Book|Rest],Acc,Final):-
-    topics(Book,TopicsList),
-    append_topics(TopicsList,Acc,NewAcc),
-    get_all_topics(Rest,NewAcc,Final).
+get_all_topics([],AllTopics,AllTopics).  
 
-find_most_common([],_):- fail.
+get_all_topics([Book|Rest],Acc,Final):-
+    topics(Book,TopicsList),           % get topics for that book
+    append_topics(TopicsList,Acc,NewAcc),  % add topics
+    get_all_topics(Rest,NewAcc,Final).  % recall predicate on rest
+
+find_most_common([],_):- fail.  % if list is empty fail
+
 find_most_common(List,MostCommon):-
     count_occurence(List,Counts),
     get_max(Counts,-1,'',MostCommon).
 
 count_occurence([],[]).
+
 count_occurence([H|T],[[H,Count]|Rest]):-
     count_and_remove(H,[H|T],Count,Remaining),
     count_occurence(Remaining,Rest).
 
 count_and_remove(_,[],0,[]).
-count_and_remove(X,[X|T],Count,Remaining):-
+
+count_and_remove(X,[X|T],Count,Remaining):-  % if elemnt matches increment counter  
     !,
     count_and_remove(X,T,NewCount,Remaining),
     Count is NewCount +1.
 
 count_and_remove(X,[H|T],Count,[H|Remaining]):-
+
         count_and_remove(X,T,Count,Remaining).
 
 get_max([],_,CurrentMax,CurrentMax).
+
 get_max([[Topic, Count]|T], MaxSoFar, _, FinalTopic) :-
     Count > MaxSoFar,
     !,
@@ -212,6 +221,4 @@ get_max([_|T],MaxSoFar,TopicSoFar,FinalTopic):-
 
 
     
-
-
 
