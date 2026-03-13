@@ -104,6 +104,19 @@ count_list([_|T], N):-
     N is N1 + 1.
 
 %%%% task 3 
+most_borrowed_book(Book):-
+    borrowed(_, Book),
+    borrowers_count(Book, N),
+    max(Book, N).
+
+max(_, N):-
+    borrowed(_, OtherBook),
+    borrowers_count(OtherBook, N1),
+    N1 > N,
+    !,
+    fail.
+
+max(_, _).
 
 %%%% task 4 
 ratings_of_book(Book, L):-
@@ -119,6 +132,32 @@ add_ratings(_, L, L).
 
 %%%% task 5
 
+all_ratings(L) :- 
+    all_ratings([], L).
+
+all_ratings(Acc, L) :- 
+    rating(Student, _, Score),
+    not_in_list((Student, Score), Acc),
+    !,
+    all_ratings([(Student, Score)|Acc], L).
+
+all_ratings(L, L).
+
+find_highest([H], H).
+
+find_highest([(S,Score)|T], (S,Score)) :- 
+    find_highest(T, (_,ScoreMax1)),
+    Score > ScoreMax1,
+    !.
+
+find_highest([(_,Score)|T], (Smax,ScoreMax)) :- 
+    find_highest(T, (Smax,ScoreMax)),
+    Score =< ScoreMax.
+
+top_reviewer(Student) :- 
+    all_ratings(RatingsList),
+    find_highest(RatingsList, (Student, _)).
+    
 %%%% task 6     
 
 most_common_topic_for_student(Student, Topic):-
@@ -173,5 +212,6 @@ get_max([_|T],MaxSoFar,TopicSoFar,FinalTopic):-
 
 
     
+
 
 
